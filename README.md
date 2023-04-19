@@ -4,60 +4,58 @@ Created a shopping list app using MongoDB + Express.js, where a user can signup 
 # Routes
 Here is a list of routes:
 
-User Signup Route: POST http://localhost:4000/user/signup
+1. User Signup Route: POST http://localhost:4000/user/signup
 
-Request Body (feel free to use your own test data):
+    1. Request Body (feel free to use your own test data):
+    ```json
+    {
+        "username": "alexwu",
+        "password": "123456"
+    }
+    ```
+    2. the response should be a token of the user
 
-```javascript
-{
-    "username": "alexwu",
-    "password": "123456"
-}
-```
-the response should be a token of the user
+2. User Login Route: POST http://localhost:4000/user/login
 
-User Login Route: POST http://localhost:4000/user/login
+    1. Request Body
+    ```json
+    {
+        "username": "alexwu",
+        "password": "123456"
+    }
+    ```
+    2. the response should be a token of the user
 
-Request Body
-```javascript
-{
-    "username": "alexwu",
-    "password": "123456"
-}
-```
-the response should be a token of the user
+3. Retrieve the current shopping list: GET http://localhost:4000/shop/list
 
-Retrieve the current shopping list: GET http://localhost:4000/shop/list
+    1. The request should come with a header of token: the_user_token_here
+        1. the user token should be the one that you have received through the login / signup routes
+        2. if the token is incorrect, return auth error
+    2. the response should be a list of items or an empty list
 
-The request should come with a header of token: the_user_token_here
-the user token should be the one that you have received through the login / signup routes
-if the token is incorrect, return auth error
-the response should be a list of items or an empty list
-Add a new item: POST http://localhost:4000/shop/add
+4. Add a new item: POST http://localhost:4000/shop/add
+    1. The request should come with a header of token: the_user_token_here
+        1. if the token is incorrect, return auth error
+    2. Body
+    ```json
+    {
+        "item": "apple"
+    }
+    ```
+    3. the response should be the new list: (if you have already added an "orange")
+    ```javascript
+    ['orange', 'apple'];
+    ```
+5. Delete an item: DELETE http://localhost:4000/shop/delete
 
-The request should come with a header of token: the_user_token_here
+    1. The request should come with a header of token: the_user_token_here
 
-if the token is incorrect, return auth error
-Body
-```javascript
-{
-    "item": "apple"
-}
-```
-the response should be the new list: (if you have already added an "orange")
-```javascript
-['orange', 'apple'];
-```
-Delete an item: DELETE http://localhost:4000/shop/delete
-
-The request should come with a header of token: the_user_token_here
-
-if the token is incorrect, return auth error
-Body
-```javascript
-{
-    "item": "apple"
-}
-```
-the response should be a new list
+        1. if the token is incorrect, return auth error
+    2. Body
+    ```json
+    {
+        "item": "apple"
+    }
+    ```
+    3. the response should be a new list
 
