@@ -8,20 +8,23 @@ User Signup Route: POST http://localhost:4000/user/signup
 
 Request Body (feel free to use your own test data):
 
+```javascript
 {
     "username": "alexwu",
     "password": "123456"
 }
+```
 the response should be a token of the user
 
 User Login Route: POST http://localhost:4000/user/login
 
 Request Body
-
+```javascript
 {
     "username": "alexwu",
     "password": "123456"
 }
+```
 the response should be a token of the user
 
 Retrieve the current shopping list: GET http://localhost:4000/shop/list
@@ -36,22 +39,25 @@ The request should come with a header of token: the_user_token_here
 
 if the token is incorrect, return auth error
 Body
-
+```javascript
 {
     "item": "apple"
 }
+```
 the response should be the new list: (if you have already added an "orange")
-
+```javascript
 ['orange', 'apple'];
+```
 Delete an item: DELETE http://localhost:4000/shop/delete
 
 The request should come with a header of token: the_user_token_here
 
 if the token is incorrect, return auth error
 Body
-
+```javascript
 {
     "item": "apple"
 }
+```
 the response should be a new list
 
