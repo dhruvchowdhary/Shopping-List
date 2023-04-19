@@ -6,6 +6,22 @@ const UserSchema = mongoose.Schema({
     required: true,
   },
   // Add more fields for information on the user.
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  shoppingList: {
+    type: Array,
+    default: [],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  }
 });
 
 // export model user with UserSchema

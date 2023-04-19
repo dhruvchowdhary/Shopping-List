@@ -3,6 +3,7 @@ const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const auth = require('../middleware/auth');
 
 const User = require("../models/User");
 
@@ -29,10 +30,10 @@ router.post(
       });
     }
 
-    const { ______, ______, ______ } = req.body;
+    const { username, email, password } = req.body;
     try {
       let user = await User.findOne({
-        ______,
+        email,
       });
       if (user) {
         return res.status(400).json({
@@ -41,9 +42,9 @@ router.post(
       }
 
       user = new User({
-        ______,
-        ______,
-        ______,
+        username,
+        email,
+        password,
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -60,7 +61,7 @@ router.post(
 
       jwt.sign(
         payload,
-        ______,
+        "randomString",
         // Make a new hash String
         {
           expiresIn: 10000,
@@ -96,17 +97,18 @@ router.post(
       });
     }
 
-    const { ______, ______ } = req.body;
+    const { email, password } = req.body;
     try {
       let user = await User.findOne({
-        email: ______,
+        // email: ______,
+        email
       });
       if (!user)
         return res.status(400).json({
           message: "User Not Exist",
         });
 
-      const isMatch = await bcrypt.compare(______, ______);
+      const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch)
         return res.status(400).json({
           message: "Incorrect Password !",
@@ -121,10 +123,10 @@ router.post(
 
       jwt.sign(
         payload,
-        ______,
+        "randomString",
         // Use the same secret string for signing
         {
-          expiresIn: 10000,
+          expiresIn: 3600,
         },
         (err, token) => {
           if (err) throw err;
@@ -151,7 +153,7 @@ router.post(
 router.get("/me", auth, async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
-    const user = await User.findById(______);
+    const user = await User.findById(req.user.id);
     res.json(user);
   } catch (e) {
     res.send({ message: "Error in Fetching user" });

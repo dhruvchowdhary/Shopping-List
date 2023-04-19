@@ -1,9 +1,10 @@
 const express = require("express");
-// const user = require("./routes/user");
-// const InitiateMongoServer = require("./config/db");
+const user = require("./routes/user");
+const InitiateMongoServer = require("./config/db");
+const shop = require("./routes/shop");
 
 // Initiate Mongo Server
-// InitiateMongoServer();
+InitiateMongoServer();
 
 const app = express();
 
@@ -22,7 +23,8 @@ app.get("/", (req, res) => {
 //  * Router - /user/*
 //  * Method - *
 //  */
-//  app.use("/user", user);
+app.use("/user", user);
+app.use("/shop", shop);
 
 app.listen(PORT, (req, res) => {
   console.log(`Server Started at PORT ${PORT}`);
